@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestTopClient_TbkItemInfoGet(t *testing.T) {
+func TestTopClient_TbkCouponGet(t *testing.T) {
 	type fields struct {
 		appKey     string
 		appSecret  string
@@ -17,25 +17,25 @@ func TestTopClient_TbkItemInfoGet(t *testing.T) {
 	}
 	type args struct {
 		ctx context.Context
-		req *TbkItemInfoGetRequest
+		req *TbkCouponGetRequest
 	}
 	tests := []struct {
 		name    string
 		fields  fields
 		args    args
-		want    *TbkItemInfoGetResponse
+		want    *TbkCouponGetResponse
 		wantErr bool
 	}{
 		// TODO: Add test cases.
 		{
-			name: "test item get",
+			name: "test coupon get",
 			fields: fields{
 				appKey:    "28111323",
 				appSecret: "a3ff5428d6a32795a96732bb552cc802",
 			},
 			args: args{
 				ctx: context.Background(),
-				req: NewTbkItemInfoGetRequest("584399378309", "", 1),
+				req: NewTbkCouponGetRequest("", "", 584399378309),
 			},
 			wantErr: false,
 		},
@@ -44,14 +44,14 @@ func TestTopClient_TbkItemInfoGet(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			c := NewTopClient(tt.fields.appKey, tt.fields.appSecret)
 
-			got, err := c.TbkItemInfoGet(tt.args.ctx, tt.args.req)
+			got, err := c.TbkCouponGet(tt.args.ctx, tt.args.req)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("TopClient.TbkItemInfoGet() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("TopClient.TbkCouponGet() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			t.Logf("got %+v", got)
 			/*if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("TopClient.TbkItemInfoGet() = %v, want %v", got, tt.want)
+				t.Errorf("TopClient.TbkCouponGet() = %v, want %v", got, tt.want)
 			}*/
 		})
 	}

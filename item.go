@@ -1,12 +1,10 @@
 package top
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"time"
 )
 
@@ -59,7 +57,7 @@ func (r *TbkItemInfoGetRequest) Signature(ctx context.Context, appkey, secret st
 	)
 	r.SignMethod = signMethod.String()
 	r.AppKey = appkey
-	log.Printf("%s", signMethod)
+
 	if signMethod == SignMethodMD5 {
 		sign, err = signatureMD5(secret, r)
 	} else if signMethod == SignMethodHMAC {
@@ -72,23 +70,6 @@ func (r *TbkItemInfoGetRequest) Signature(ctx context.Context, appkey, secret st
 	}
 	r.Sign = sign
 	return nil
-}
-
-func (r *TbkItemInfoGetRequest) GetRequestData(ctx context.Context) ([]byte, error) {
-	pairs := newKVPairList()
-	pairs.load(r)
-	var (
-		data = bytes.NewBuffer(nil)
-	)
-
-	for _, pair := range pairs.list {
-		data.WriteString(pair.key)
-		data.WriteString("=")
-		data.WriteString(pair.value)
-		data.WriteString("&")
-	}
-
-	return bytes.TrimRight(data.Bytes(), "&"), nil
 }
 
 type TbkItemInfoGetResponse struct {

@@ -87,10 +87,7 @@ func (c *TopClient) execute(ctx context.Context, req TopRequest) ([]byte, error)
 		return nil, fmt.Errorf("req.Signature error %w", err)
 	}
 
-	reqData, err := req.GetRequestData(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("req.GetRequestData failed %w", err)
-	}
+	reqData := getRequestData(req)
 
 	log.Printf("request: %s\n", reqData)
 	reqBytes := bytes.NewReader(reqData)

@@ -23,7 +23,6 @@ const (
 
 type TopRequest interface {
 	Signature(ctx context.Context, appkey, secret string, signMethod SignMethod) error
-	GetRequestData(ctx context.Context) ([]byte, error)
 }
 type ErrorResponse struct {
 	SubMsg  string `json:"sub_msg"`
@@ -97,4 +96,21 @@ func signatureHMAC(secret string, data TopRequest) (string, error) {
 	h := hmac.New(md5.New, []byte(secret))
 	h.Write(sign.Bytes())
 	return strings.ToUpper(hex.EncodeToString(h.Sum(nil))), nil
+}
+
+func getRequestData(r interface{}) []byte {
+	pairs := newKVPairList()
+	pairs.load(r)
+	var (
+		data = bytes.NewBuffer(nil)
+	)
+
+	for _, pair := range pairs.list {
+		data.WriteString(pair.key)
+		data.WriteString("=")
+		data.WriteString(pair.value)
+		data.WriteString("&")
+	}
+
+	return bytes.TrimRight(data.Bytes(), "&")
 }
