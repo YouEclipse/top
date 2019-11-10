@@ -91,7 +91,7 @@ type SmallImages struct {
 
 type NTbkItem struct {
 	CatName                    string      `json:"cat_name"`
-	NumIid                     int         `json:"num_iid"`
+	NumIid                     int64       `json:"num_iid"`
 	Title                      string      `json:"title"`
 	PictURL                    string      `json:"pict_url"`
 	SmallImages                SmallImages `json:"small_images"`
