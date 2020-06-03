@@ -30,8 +30,8 @@ func TestTopClient_TbkCouponGet(t *testing.T) {
 		{
 			name: "test coupon get",
 			fields: fields{
-				appKey:    "28111323",
-				appSecret: "a3ff5428d6a32795a96732bb552cc802",
+				appKey:    "",
+				appSecret: "",
 			},
 			args: args{
 				ctx: context.Background(),
